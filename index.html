@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Design patterns</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+        
+				<section>
+          <H1>Design patterns</H1>
+        </section>
+				<section>
+          <h2>Architecture</h2>
+          <div class="fragment" >
+            <h6>Building project</h6>
+            <img width="500px" data-src="./assets/images/empire-state.png">
+          </div>
+
+        </section>
+        
+				<section>
+          <h2>Design patterns</h2>
+          <div class="fragment">
+            <h6>Instructions</h6>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr);">
+              <img data-src="./assets/images/piles.png">
+              <img data-src="./assets/images/cement-mix.png">
+              <img data-src="./assets/images/wires.png">
+            </div>
+          </div>
+        </section>
+        
+				<section>
+          <h2 style="margin-bottom:30px;">Docking of spaceships</h2>
+            <div class="fragment" style="display: grid; grid-template-columns: repeat(3, 1fr);">
+              <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                <h6>Space station</h6>
+                <img
+                  data-src="./assets/images/international-space-station.png"
+                >
+              </div >
+              <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; align-content: center;">
+                <img class="fragment fade-out" data-src="./assets/images/interaction.png" style="max-width: 100px; object-fit: contain;">
+                <img class="fragment fade-up" data-src="./assets/images/free-icon-adapter-5750314.png" style="max-width: 300px; object-fit: contain;">
+              </div>
+              <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                <h6>UFO</h6>
+                <img data-src="./assets/images/ufo.png">
+              </div>
+            </div>
+        </section>
+
+        <section>
+          <div>
+            <p>Alien API data</p>
+            <pre><code data-trim data-noescape>
+              {
+                alien_name: ["Pleiadian", "Reptilianov"]
+              }
+            </code></pre>
+          </div>
+          <div class="fragment">
+            <p>Human station input data format</p>
+            <pre><code data-trim data-noescape>
+              {
+                alienName: "Pleiadian Reptilianov"
+              }
+            </code></pre>
+          </div>
+          <div class="fragment">
+            <p>"Adapter" pattern</p>
+            <pre><code data-trim data-noescape>
+              function alienServerToHumanAdapter(data) {
+                return {
+                  alienName: data.alien_name.join(" "),
+                }
+              }
+            </code></pre>
+          </div>
+        </section>
+        
+        <section data-auto-animate>
+            <H4>Design patterns groups</H4>
+            <div class="" style="display: flex; justify-content: space-around;">
+              <div data-id="box" style="width: 50px; height: 50px; background: gray;"></div>
+              <div data-id="box" style="width: 50px; height: 50px; background: gray;"></div>
+              <div data-id="box" style="width: 50px; height: 50px; background: gray;"></div>
+            </div>
+        </section>
+        <section data-auto-animate>
+            <H4>Design patterns groups</H4>
+          <div class="" style="display: flex; justify-content: space-around;">
+            <div data-id="box" style="width: 300px; height: 100px; display: flex; align-items: center; justify-content: center; background: #8458B3; color: black;">
+              Creational
+            </div>
+            <div data-id="box" style="width: 300px; height: 100px; display: flex; align-items: center; justify-content: center; background: #ff1d58; color: black">
+              Structural
+            </div>
+            <div data-id="box" style="width: 300px; height: 100px; display: flex; align-items: center; justify-content: center; background: #ffde22; color: black">
+              Behavioral
+            </div>
+          </div>
+        </section>
+        <section data-auto-animate>
+          <section data-auto-animate>
+            <div data-id="box" style="background: #8458B3; color: black; margin-bottom: 40px;">
+              Creational design patterns
+            </div>
+            <ul>
+              <li>Factory Method</li>
+              <li>Builder</li>
+              <li>Singleton</li>
+            </ul>
+          </section>
+          
+          <section>
+            <H4>Factory Method</H4>
+            <pre><code data-trim data-noescape>
+              function createSpaceship(enginsCount = 3, type = 'warship') {
+                return {
+                  engines: enginsCount,
+                  guns: type === 'warship' ? 8 : 0;
+                  bodyMaterial: 'magnesium',
+                }
+              }
+            </code></pre>
+            <pre class="fragment"><code data-trim data-noescape>
+              const spaceshipWithThreeEngines = createSpaceship(3);
+              const spaceshipWithSevenEngines = createSpaceship(7);
+            </code></pre>
+          </section>
+          
+          <section>
+            <H4>Singleton</H4>
+            <pre><code data-trim data-noescape>
+              (function() {
+                // hold the created object:
+                let instance = null; 
+                
+                return class List {
+                  constructor() {
+                    if (instance === null) {
+                      instance = this;
+                    }
+                    
+                    return instance;
+                  }
+                };
+              })()
+            </code></pre>
+          </section>
+          
+          <section>
+            <H4>builder</H4>
+            <pre><code data-trim data-noescape>
+              class Spaceship {
+                constructor(options) {
+                  const { engine, shield, gun } = options;
+
+                  this.engine = engine;
+                  this.shield = shield;
+                  this.gun = gun;
+                }
+              }
+            </code></pre>
+          </section>
+          
+          <section>
+            <pre><code data-trim data-noescape>
+              class SpaceshipBuilder {
+                options = {
+                  base: 'rocket',
+                }
+                
+                addEngine = () => {
+                  this.options.engine = true;
+                  return this;
+                }
+                
+                addShield = () => {
+                  this.options.shield = true;
+                  return this;
+                }
+                
+                addGun = () => {
+                  this.options.gun = true;
+                  return this;
+                }
+                
+                build = () => new Spaceship(this.options)
+              }
+            </code></pre>
+            <pre class="fragment"><code data-trim data-noescape>
+              const warship = new SpaceshipBuilder().addEngine().addGun().build()
+            </code></pre>
+          </section>
+        </section>
+        
+        <section data-auto-animate>
+          <section data-auto-animate>
+            <div data-id="box" style="background: #ff1d58; color: black; margin-bottom: 40px;">
+              Structural design patterns
+            </div>
+            <ul>
+              <li>Adapter</li>
+              <li>Facade</li>
+              <li>Decorator</li>
+            </ul>
+          </section>
+          
+          <section>
+            <H4>Facade</H4>
+            <pre><code data-trim data-noescape>
+              function turnLeft() {
+                hydraulicSystem.turnOn();
+                
+                while (hydraulicSystem.getleftWingPosition() <= 1000) {
+                  hydraulicSystem.valveOpen();
+                  hydraulicSystem.applyPressure();
+                }
+                
+                hydraulicSystem.valveClose();
+                hydraulicSystem.turnOff();
+              }
+              
+              turnLeft()
+            </code></pre>
+          </section>
+          
+          <section>
+            <H4>Decorator</H4>
+            <pre><code data-trim data-noescape>
+              const pilot = {
+                firstName: 'Pleiadian",
+                lastName: 'Reptilianov',
+              }
+              
+              function update(firstName, lastName) {
+                user.firstName = firstName;
+                user.lastName = lastName;
+              }
+            </code></pre>
+            <pre  class="fragment"><code data-trim data-noescape>
+              function loggingDecorator(fn) {
+                return function wrapped(...args) {
+                  console.log(`Logging... ${args.join(',')}`)
+                  return fn(...args)
+                }
+              }
+            </code></pre>
+          </section>
+        </section>
+
+        <section data-auto-animate>
+          <section data-auto-animate>
+            <div data-id="box" style="background: #ffde22; color: black; margin-bottom: 40px;">
+              Behavioral design patterns
+            </div>
+            <ul>
+              <li>Strategy</li>
+              <li>Iterator</li>
+              <li>Observer</li>
+            </ul>
+          </section>
+          
+          <section>
+            <H4>Strategy</H4>
+            <pre><code data-trim data-noescape>
+              class Pilot {
+                function CreateOrUpdate(firstName, lastName, pilotID = null)
+                  {
+                    if(pilotID) {
+                        // pilot does not exist, create record
+                    } else {
+                        // record is exist, update it
+                    }
+                  }
+              }
+            </code></pre>
+          </section>
+          
+          <section>
+            <H4>Iterator</H4>
+            <pre><code data-trim data-noescape>
+              function handleAmmunition(type: string, amount: number): void {
+                switch (type) {
+                  case 'rocket':
+                    return rocketHandler(type, amount);
+                  case 'bullet':
+                    return bulletHandler(type, amount);
+                  default:
+                    console.log('No handler found!')
+                }
+              }
+            </code></pre>
+          </section>
+          
+          <section>
+            <H4>Observer</H4>
+            <pre><code data-trim data-noescape>
+              class MissionControlCenter {
+                listeners = [];
+              
+                subscribe(applicant) {
+                  this.listeners.push(applicant);
+                }
+                
+                unsubscribe(applicant) {
+                  this.listeners = this.listeners.filter(
+                    (listener) => listener.name !== applicant.name;
+                  )
+                }
+                
+                notify(position) {
+                  this.listeners.forEach((listener) => {
+                    listener.update(position);
+                  })
+                }
+              }
+            </code></pre>
+          </section>
+        </section>
+        
+        <section>
+          <h1>A few more words...</h1>
+        </section>
+        
+        
+        
+        
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
